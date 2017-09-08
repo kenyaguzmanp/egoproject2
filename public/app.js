@@ -153,13 +153,48 @@
         if(payload){
             vm.user = payload;
         }
+        
+        vm.logOut = function(){
+            delete $window.localStorage.token;
+            vm.user = null;
+            $location.path('/login');
+        }
     }
 
     app.controller('PollsController', PollsController);
 
-    function PollsController($location, $window){
+    function PollsController($location, $window, $http, jwtHelper){
         var vm = this;
+        var user = jwtHelper.decodeToken($window.localStorage.token);
+        var id = user.data._id;
         vm.title = "PollsController";
+        vm.poll = {
+            options: [],
+            name: '',
+            user: id
+        };
+        vm.poll.options = [{
+            name: '',
+            votes: 0
+        }];
+        vm.addOption =  function (){
+            vm.poll.options.push({
+                name: '',
+                votes: 0
+            });
+        }
+        vm.addPoll = function(){
+            if(!vm.poll){
+                console.log('Invalid data suplied');
+                return;
+            }
+            $http.post('/api/polls', vm.poll)
+                 .then(function(response){
+                     console.log(response);
+                 }, function(err){
+                    console.log(err);
+                 })  
+        }
     }
 
     app.controller('PollController', PollController);

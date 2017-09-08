@@ -3,6 +3,28 @@ var router = express.Router({ caseSensitive: true });
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
+var Poll = require('../models/polls');
+
+//CReate a new poll
+router.post('/polls', authenticate, function(request, response){
+    console.log(request.body);
+    if(!request.body.options || !request.body.name){
+        return response.status(400).send('No poll data supplied');
+    }
+    var poll = new Poll();
+    poll.name = request.body.name;
+    poll.options = request.body.options;
+   // var token = request.headers.authorization.split(' ')[1];
+    poll.user = request.body.id;
+
+    poll.save(function(err, res){
+        if(err){
+            return response.status(400).send(err)
+        }
+        return response.status(201).send(res)
+    });
+});
+
 
 //verification of token
 router.post('/verify', function(request, response){
@@ -63,6 +85,23 @@ router.post('/register', function(request, response){
         })
     }
 });
+
+//Authentication middleware
+function authenticate(request, response, next){
+    if(!request.headers.authorization){
+        return response.status(404).send('No token supplied')
+    }
+    if(request.headers.authorization.split(' ')[1]){
+        var token = request.headers.authorization.split(' ')[1];
+        jwt.verify(token, process.env.secret, function(err, decoded){
+            if(err){
+                return response.status(400).send(err)
+            }
+            console.log("continuig with middleware");
+            next();
+        })
+    }
+};
 
 
 module.exports = router;
