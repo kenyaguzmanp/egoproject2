@@ -5,6 +5,33 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var Poll = require('../models/polls');
 
+
+router.get('/polls/:id', function(request, response){
+    console.log("entro");
+    Poll.find({}, function(err, polls){
+        if(err){
+            return response.status(400).send(err)
+        }
+        if(polls.length < 1){
+            return response.status(400).send('No polls added yet')
+        }
+        return response.status(200).send(polls)
+    })
+});
+
+//Get all the polls
+router.get('/polls', function(request, response){
+    Poll.find({}, function(err, polls){
+        if(err){
+            return response.status(400).send(err)
+        }
+        if(polls.length < 1){
+            return response.status(400).send('No polls added yet')
+        }
+        return response.status(200).send(polls)
+    })
+});
+
 //CReate a new poll
 router.post('/polls', authenticate, function(request, response){
     console.log(request.body);

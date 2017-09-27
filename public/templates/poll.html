@@ -1,1 +1,6 @@
 <h3>{{vm.title}}</h3>
+<h4>{{vm.thisPoll.name}}</h4>
+<ul>
+    <li ng-repeat="option in vm.thisPoll.options">{{option.name}} --- {{option.votes}}
+    </li>
+</ul>

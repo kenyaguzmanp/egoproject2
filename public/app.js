@@ -168,6 +168,7 @@
         var user = jwtHelper.decodeToken($window.localStorage.token);
         var id = user.data._id;
         vm.title = "PollsController";
+        polls = [];
         vm.poll = {
             options: [],
             name: '',
@@ -183,6 +184,17 @@
                 votes: 0
             });
         }
+
+        vm.getAllPolls = function(){
+            $http.get('/api/polls')
+                 .then(function(response){
+                     vm.polls = response.data;
+                 }, function(err){
+                     console.log(err);
+                 })   
+        }
+                vm.getAllPolls()
+
         vm.addPoll = function(){
             if(!vm.poll){
                 console.log('Invalid data suplied');
@@ -190,8 +202,10 @@
             }
             $http.post('/api/polls', vm.poll)
                  .then(function(response){
-                     console.log(response);
+                     vm.poll = {};
+                     vm.getAllPolls();
                  }, function(err){
+                     vm.poll = {};
                     console.log(err);
                  })  
         }
@@ -199,9 +213,56 @@
 
     app.controller('PollController', PollController);
 
-    function PollController($location, $window){
+    function PollController($location, $window, $http, jwtHelper){
         var vm = this;
+        var user = jwtHelper.decodeToken($window.localStorage.token);
+        var id = user.data._id;
         vm.title = "PollController";
+        vm.thisPollId = $location.path().slice(7);
+        vm.thisPoll;
+        console.log("path: " + vm.thisPollId);
+        
+        polls = [];
+        vm.poll = {
+            options: [],
+            name: '',
+            user: id
+        };
+        vm.poll.options = [{
+            name: '',
+            votes: 0
+        }];
+
+        vm.getThisPoll = function(){
+            $http.get('/api/polls')
+                 .then(function(response){
+                     vm.polls = response.data;
+                     //console.log("todos los polls " , vm.polls);
+                     console.log("poll id " + vm.polls[3]._id);
+                   //  console.log("indice " + vm.polls.indexOf(vm.thisPollId));
+                    for(var i=0; i<vm.polls.length; i++){
+                        if(vm.polls[i]._id === vm.thisPollId){
+                            console.log("indice donde esta el id del poll: " + i);
+                            vm.thisPoll = vm.polls[i];
+                        }
+                    }
+                    console.log("this poll " ,  vm.thisPoll);
+
+                 }, function(err){
+                     console.log(err);
+                 })   
+        }
+                vm.getThisPoll()
+
+                
+                
+
+
+
+                
+
+                   
+        
     }
 
 }())

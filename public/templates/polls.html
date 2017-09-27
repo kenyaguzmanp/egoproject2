@@ -7,3 +7,9 @@
 <button ng-click="vm.addOption()" class="btn btn-primary">Add Option</button>
 <br><br>
 <button ng-click="vm.addPoll()" ng-disabled="!vm.poll.name" class="btn btn-primary">Add Poll</button>
+<hr>
+<ul>
+    <li ng-repeat="poll in vm.polls">{{poll.name}} --- {{poll._id}}
+        <a ng-href="./polls/{{poll._id}}">link</a>
+    </li>
+</ul>
