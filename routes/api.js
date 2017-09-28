@@ -6,6 +6,30 @@ var User = require('../models/user');
 var Poll = require('../models/polls');
 
 
+router.post('/polls/:id', authenticate, function(request, response){
+    console.log(request.body);
+    /*
+    if(!request.body.options || !request.body.name){
+        return response.status(400).send('No poll data supplied');
+    }
+    var poll = new Poll();
+    poll.name = request.body.name;
+    poll.options = request.body.options;
+   // var token = request.headers.authorization.split(' ')[1];
+    poll.user = request.body.id;
+
+    poll.save(function(err, res){
+        if(err){
+            return response.status(400).send(err)
+        }
+        return response.status(201).send(res)
+    });
+    */
+
+});
+
+
+
 router.get('/polls/:id', function(request, response){
     console.log("entro");
     Poll.find({}, function(err, polls){

@@ -213,13 +213,15 @@
 
     app.controller('PollController', PollController);
 
-    function PollController($location, $window, $http, jwtHelper){
+    
+    function PollController($location, $window, $http, jwtHelper, $scope){
         var vm = this;
         var user = jwtHelper.decodeToken($window.localStorage.token);
         var id = user.data._id;
         vm.title = "PollController";
         vm.thisPollId = $location.path().slice(7);
         vm.thisPoll;
+        vm.voted = false;
         console.log("path: " + vm.thisPollId);
         
         polls = [];
@@ -244,6 +246,7 @@
                         if(vm.polls[i]._id === vm.thisPollId){
                             console.log("indice donde esta el id del poll: " + i);
                             vm.thisPoll = vm.polls[i];
+                            vm.thisPoll.indexPolls = i;
                         }
                     }
                     console.log("this poll " ,  vm.thisPoll);
@@ -254,15 +257,21 @@
         }
                 vm.getThisPoll()
 
-                
-                
-
-
-
-                
-
-                   
+        //$scope.selectedOption = "";
         
-    }
+        vm.voteForThis = function(){
+            console.log('you voted for: ' + $scope.selectedPoll);
+            for(var j=0; j<vm.thisPoll.options.length; j++){
+                if(vm.thisPoll.options[j].name === $scope.selectedPoll && vm.voted === false){
+                    console.log("indice donde esta la opcion seleccionada es " + j);
+                    vm.thisPoll.options[j].votes +=1;
+                    vm.voted = "true";
+                    vm.polls[vm.thisPoll.indexPolls].options[j].votes = vm.thisPoll.options[j].votes;
+                }
+            }
+                   
+        } 
+
+    } 
 
 }())

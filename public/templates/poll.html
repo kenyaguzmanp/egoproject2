@@ -4,3 +4,28 @@
     <li ng-repeat="option in vm.thisPoll.options">{{option.name}} --- {{option.votes}}
     </li>
 </ul>
+<div class="row">
+    <div class="col-md-4">
+       
+        <select class="form-control input-lg" ng-model="selectedPoll">
+            <option ng-repeat="option in vm.thisPoll.options">{{option.name}}</option>
+        </select>
+        {{selectedPoll}}
+        <br>
+        <button ng-click="vm.voteForThis()" ng-disabled="vm.voted" class="btn btn-primary">Vote</button>
+    
+    <!--
+    <select class="form-control" ng-options="option in vm.thisPoll.options" ng-model="selectedOption">
+            <option value="">--Select Option--</option>
+    </select>
+-->
+    </div>
+    <div class="col-md-8">
+        <ul>
+            <li ng-repeat="option in vm.thisPoll.options">{{option.votes}}</li>
+        </ul> 
+    </div>
+</div>
+
+
+
