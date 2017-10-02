@@ -1,5 +1,5 @@
 <h3>{{vm.title}}</h3>
-<h4>{{vm.thisPoll.name}}</h4>
+<h4>{{vm.thisPollIs.name}}</h4>
 <ul>
     <li ng-repeat="option in vm.thisPoll.options">{{option.name}} --- {{option.votes}}
     </li>
@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-md-4">
        
-        <select class="form-control input-lg" ng-model="selectedPoll">
-            <option ng-repeat="option in vm.thisPoll.options">{{option.name}}</option>
+        <select class="form-control input-lg" ng-model="selectedOption">
+            <option ng-repeat="option in vm.thisPollIs.options">{{option.name}}</option>
         </select>
-        {{selectedPoll}}
+        {{selectedOption}}
         <br>
-        <button ng-click="vm.voteForThis()" ng-disabled="vm.voted" class="btn btn-primary">Vote</button>
+        <button ng-click="vm.voteForThis()" ng-disabled="vm.voted || !(selectedOption)" class="btn btn-primary">Vote</button>
     
     <!--
     <select class="form-control" ng-options="option in vm.thisPoll.options" ng-model="selectedOption">
@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-8">
         <ul>
-            <li ng-repeat="option in vm.thisPoll.options">{{option.votes}}</li>
+            <li ng-repeat="option in vm.thisPollIs.options">{{option.votes}}</li>
         </ul> 
     </div>
 </div>

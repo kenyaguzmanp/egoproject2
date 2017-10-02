@@ -7,44 +7,56 @@ var Poll = require('../models/polls');
 
 
 router.post('/polls/:id', authenticate, function(request, response){
+    console.log("EN POST");
     console.log(request.body);
+    var pollToUpdateId = request.body._id;
+    var optionsToUpdate = request.body.options;
+    console.log("poll id to be updated", pollToUpdateId);
+    console.log("options to be updated: ", optionsToUpdate);
     /*
-    if(!request.body.options || !request.body.name){
-        return response.status(400).send('No poll data supplied');
-    }
-    var poll = new Poll();
-    poll.name = request.body.name;
-    poll.options = request.body.options;
-   // var token = request.headers.authorization.split(' ')[1];
-    poll.user = request.body.id;
+    Poll.update(
+        { _id: pollToUpdateId}, 
+        {
+           options : optionsToUpdate
+        },
+        { upsert: true }   
+           
+    );*/
 
-    poll.save(function(err, res){
+     
+    Poll.update({ _id: pollToUpdateId},{ $set: {options : optionsToUpdate}}, function(err, response){
+        console.log("actualizando en bd");
         if(err){
             return response.status(400).send(err)
         }
-        return response.status(201).send(res)
-    });
-    */
+        console.log("response en actualizacion de bd ", response);
+        //return response.status(200).send(poll);
+    })
+    
 
 });
 
 
 
 router.get('/polls/:id', function(request, response){
-    console.log("entro");
-    Poll.find({}, function(err, polls){
+    console.log("ENTRO A POLL");
+    var idPoll = request.params.id;
+    console.log("request del parametro ID en Poll " , idPoll);
+
+    Poll.find({ _id: idPoll}, function(err, pol){
+        console.log("buscando en la BD");
         if(err){
             return response.status(400).send(err)
         }
-        if(polls.length < 1){
-            return response.status(400).send('No polls added yet')
-        }
-        return response.status(200).send(polls)
+        return response.status(200).send(pol);
     })
+
 });
+
 
 //Get all the polls
 router.get('/polls', function(request, response){
+    console.log("entro a polls");
     Poll.find({}, function(err, polls){
         if(err){
             return response.status(400).send(err)

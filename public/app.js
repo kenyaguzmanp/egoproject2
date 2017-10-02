@@ -163,7 +163,7 @@
 
     app.controller('PollsController', PollsController);
 
-    function PollsController($location, $window, $http, jwtHelper){
+    function PollsController($location, $window, $http, jwtHelper, $scope){
         var vm = this;
         var user = jwtHelper.decodeToken($window.localStorage.token);
         var id = user.data._id;
@@ -209,11 +209,63 @@
                     console.log(err);
                  })  
         }
+
+        vm.goToThisPoll = function(thisPoll){             
+            console.log("the poll you selected: " , thisPoll);
+            var id = thisPoll._id;
+            console.log("id " + id);
+            vm.selectedPoll = thisPoll;
+            $location.path("/polls/" + id);                      
+        }
+
     }
 
     app.controller('PollController', PollController);
 
-    
+    function PollController($location, $window, $http, jwtHelper, $scope){
+        var vm = this;
+        vm.title = "PollController";
+        var user = jwtHelper.decodeToken($window.localStorage.token);
+        vm.thisPollId = $location.path().slice(7);
+        vm.voted = false;
+
+        console.log("Entro al controlador del POll");
+        console.log("vm.thisPollId " + vm.thisPollId);
+        
+        $http.get('/api/polls/' + vm.thisPollId)
+            .then(function(response){
+                console.log("data del poll: ", response.data[0]);
+                vm.thisPollIs = response.data[0];
+            }, function(err){
+                console.log(err);
+            })
+
+            console.log('vm.thispollis ' , vm.thisPollIs);  
+        vm.voteForThis = function(){
+            console.log('you voted for: ' + $scope.selectedOption);
+            for(var j=0; j<vm.thisPollIs.options.length; j++){
+                if(vm.thisPollIs.options[j].name === $scope.selectedOption && vm.voted === false){
+                    console.log("indice donde esta la opcion seleccionada es " + j);
+                    vm.thisPollIs.options[j].votes +=1;
+                    vm.voted = "true";
+                    //vm.polls[vm.thisPoll.indexPolls].options[j].votes = vm.thisPoll.options[j].votes;
+                }
+            }
+            
+            $http.post('/api/polls/' + vm.thisPollId, vm.thisPollIs)
+                .then(function(response){
+                    //vm.thisPollIs = {};
+                    //vm.getAllPolls();
+                }, function(err){
+                    //vm.poll = {};
+                console.log(err);
+                }) 
+            
+        }        
+    } 
+
+
+     /*
     function PollController($location, $window, $http, jwtHelper, $scope){
         var vm = this;
         var user = jwtHelper.decodeToken($window.localStorage.token);
@@ -239,8 +291,8 @@
             $http.get('/api/polls')
                  .then(function(response){
                      vm.polls = response.data;
-                     //console.log("todos los polls " , vm.polls);
-                     console.log("poll id " + vm.polls[3]._id);
+                     console.log("response dle get " , response.config.url);
+                    // console.log("poll id " + vm.polls[3]._id);
                    //  console.log("indice " + vm.polls.indexOf(vm.thisPollId));
                     for(var i=0; i<vm.polls.length; i++){
                         if(vm.polls[i]._id === vm.thisPollId){
@@ -272,6 +324,6 @@
                    
         } 
 
-    } 
+    } */
 
 }())

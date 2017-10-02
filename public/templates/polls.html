@@ -8,8 +8,12 @@
 <br><br>
 <button ng-click="vm.addPoll()" ng-disabled="!vm.poll.name" class="btn btn-primary">Add Poll</button>
 <hr>
+{{selectedPollToGo}}
 <ul>
-    <li ng-repeat="poll in vm.polls">
-        <a ng-href="./polls/{{poll._id}}">{{poll.name}}</a>
+    <li ng-repeat="poll in vm.polls"> 
+        <button ng-click="vm.goToThisPoll(poll)" class="btn btn-primary">{{poll.name}}</button>
+        <!--<a ng-href="./polls/{{poll._id}}" ng-click="vm.goToThisPoll(poll)" class="btn btn-primary">{{poll.name}}</a>-->
+        <!--<a ng-href="./polls/{{poll._id}}">{{poll.name}}</a>-->
+        
     </li>
 </ul>
