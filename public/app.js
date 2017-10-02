@@ -159,6 +159,10 @@
             vm.user = null;
             $location.path('/login');
         }
+
+        vm.myPolls = function(){
+            $location.path('/polls');
+        }
     }
 
     app.controller('PollsController', PollsController);
@@ -225,7 +229,7 @@
     function PollController($location, $window, $http, jwtHelper, $scope){
         var vm = this;
         vm.title = "PollController";
-        var user = jwtHelper.decodeToken($window.localStorage.token);
+        //var user = jwtHelper.decodeToken($window.localStorage.token);
         vm.thisPollId = $location.path().slice(7);
         vm.voted = false;
 
@@ -248,7 +252,6 @@
                     console.log("indice donde esta la opcion seleccionada es " + j);
                     vm.thisPollIs.options[j].votes +=1;
                     vm.voted = "true";
-                    //vm.polls[vm.thisPoll.indexPolls].options[j].votes = vm.thisPoll.options[j].votes;
                 }
             }
             
@@ -261,69 +264,29 @@
                 console.log(err);
                 }) 
             
-        }        
-    } 
-
-
-     /*
-    function PollController($location, $window, $http, jwtHelper, $scope){
-        var vm = this;
-        var user = jwtHelper.decodeToken($window.localStorage.token);
-        var id = user.data._id;
-        vm.title = "PollController";
-        vm.thisPollId = $location.path().slice(7);
-        vm.thisPoll;
-        vm.voted = false;
-        console.log("path: " + vm.thisPollId);
-        
-        polls = [];
-        vm.poll = {
-            options: [],
-            name: '',
-            user: id
-        };
-        vm.poll.options = [{
-            name: '',
-            votes: 0
-        }];
-
-        vm.getThisPoll = function(){
-            $http.get('/api/polls')
-                 .then(function(response){
-                     vm.polls = response.data;
-                     console.log("response dle get " , response.config.url);
-                    // console.log("poll id " + vm.polls[3]._id);
-                   //  console.log("indice " + vm.polls.indexOf(vm.thisPollId));
-                    for(var i=0; i<vm.polls.length; i++){
-                        if(vm.polls[i]._id === vm.thisPollId){
-                            console.log("indice donde esta el id del poll: " + i);
-                            vm.thisPoll = vm.polls[i];
-                            vm.thisPoll.indexPolls = i;
-                        }
-                    }
-                    console.log("this poll " ,  vm.thisPoll);
-
-                 }, function(err){
-                     console.log(err);
-                 })   
         }
-                vm.getThisPoll()
-
-        //$scope.selectedOption = "";
         
-        vm.voteForThis = function(){
-            console.log('you voted for: ' + $scope.selectedPoll);
-            for(var j=0; j<vm.thisPoll.options.length; j++){
-                if(vm.thisPoll.options[j].name === $scope.selectedPoll && vm.voted === false){
-                    console.log("indice donde esta la opcion seleccionada es " + j);
-                    vm.thisPoll.options[j].votes +=1;
-                    vm.voted = "true";
-                    vm.polls[vm.thisPoll.indexPolls].options[j].votes = vm.thisPoll.options[j].votes;
+        vm.showTheChart = function(){
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            var data =[['Option', 'Votes']];
+            function drawChart() {
+                for(var k=0; k<vm.thisPollIs.options.length; k++){
+                    data[k+1] = [vm.thisPollIs.options[k].name, vm.thisPollIs.options[k].votes];
                 }
-            }
-                   
-        } 
+            data = google.visualization.arrayToDataTable(data);        
 
-    } */
+
+            var options = {
+                title: vm.thisPollIs.name
+            };
+                
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                
+                chart.draw(data, options);
+            }
+
+        }
+    }
 
 }())

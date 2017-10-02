@@ -14,16 +14,14 @@
         <br>
         <button ng-click="vm.voteForThis()" ng-disabled="vm.voted || !(selectedOption)" class="btn btn-primary">Vote</button>
     
-    <!--
-    <select class="form-control" ng-options="option in vm.thisPoll.options" ng-model="selectedOption">
-            <option value="">--Select Option--</option>
-    </select>
--->
     </div>
     <div class="col-md-8">
         <ul>
             <li ng-repeat="option in vm.thisPollIs.options">{{option.votes}}</li>
-        </ul> 
+        </ul>
+        <button ng-click="vm.showTheChart()" class="btn btn-primary">Show the Chart</button>
+        <div id="piechart" style="width: 900px; height: 500px;"></div> 
+        <!--<div chart1></div> -->
     </div>
 </div>
 

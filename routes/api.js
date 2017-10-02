@@ -6,23 +6,13 @@ var User = require('../models/user');
 var Poll = require('../models/polls');
 
 
-router.post('/polls/:id', authenticate, function(request, response){
+router.post('/polls/:id', function(request, response){
     console.log("EN POST");
     console.log(request.body);
     var pollToUpdateId = request.body._id;
     var optionsToUpdate = request.body.options;
     console.log("poll id to be updated", pollToUpdateId);
     console.log("options to be updated: ", optionsToUpdate);
-    /*
-    Poll.update(
-        { _id: pollToUpdateId}, 
-        {
-           options : optionsToUpdate
-        },
-        { upsert: true }   
-           
-    );*/
-
      
     Poll.update({ _id: pollToUpdateId},{ $set: {options : optionsToUpdate}}, function(err, response){
         console.log("actualizando en bd");
@@ -30,7 +20,6 @@ router.post('/polls/:id', authenticate, function(request, response){
             return response.status(400).send(err)
         }
         console.log("response en actualizacion de bd ", response);
-        //return response.status(200).send(poll);
     })
     
 
