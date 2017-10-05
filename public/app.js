@@ -190,9 +190,23 @@
         }
 
         vm.getAllPolls = function(){
+            //vm.idUser = id;
+            console.log("este es el id del usuario ", id);
             $http.get('/api/polls')
                  .then(function(response){
-                     vm.polls = response.data;
+                     var dat = response.data;
+                     var cont= 0;
+                     console.log("longitud de la data " +dat.length);
+                     for(l=0; l< dat.length; l++){
+                         if(dat[l].user === id){
+                             cont++;
+                            polls.push(dat[l]);
+                         }
+                     }
+                     console.log("cuantos poll tiene este usuario" +cont);
+                     console.log("los polls del ususario son: ", polls);
+                     //vm.polls = response.data;
+                     vm.polls = polls;
                  }, function(err){
                      console.log(err);
                  })   
@@ -207,6 +221,8 @@
             $http.post('/api/polls', vm.poll)
                  .then(function(response){
                      vm.poll = {};
+                     console.log("EN POST NEW POLL");
+                     
                      vm.getAllPolls();
                  }, function(err){
                      vm.poll = {};
@@ -220,6 +236,24 @@
             console.log("id " + id);
             vm.selectedPoll = thisPoll;
             $location.path("/polls/" + id);                      
+        }
+
+        vm.deleteThisPoll = function(thisPoll){
+            if(confirm("Are you sure you want to delete this Poll?")){
+                console.log("you want to delete this: " , thisPoll);
+                vm.pollToDelete = thisPoll;
+                vm.pollToDelete.toDelete = true;                  
+                $http.post('/api/polls', vm.pollToDelete)
+                    .then(function(response){
+                        //vm.poll = {};
+                        //vm.getAllPolls();
+                    }, function(err){
+                        //vm.poll = {};
+                    console.log(err);
+                }) 
+
+
+            }
         }
 
     }
@@ -257,13 +291,14 @@
             
             $http.post('/api/polls/' + vm.thisPollId, vm.thisPollIs)
                 .then(function(response){
+                    //$window.localStorage.token = response.data;
                     //vm.thisPollIs = {};
                     //vm.getAllPolls();
                 }, function(err){
                     //vm.poll = {};
                 console.log(err);
                 }) 
-            
+            vm.showTheChart();
         }
         
         vm.showTheChart = function(){
