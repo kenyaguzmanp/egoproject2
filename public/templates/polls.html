@@ -1,14 +1,38 @@
-<h3>{{vm.title}}</h3>
-<hr>
-<input type="text" ng-model="vm.poll.name" placeholder="Name of poll...">
-<hr>
-<input type="text" ng-model="vm.poll.options[$index].name" ng-repeat="option in vm.poll.options" placeholder="Option name" class="form-control" style="padding: 10px;">
-<hr>
-<button ng-click="vm.addOption()" class="btn btn-primary">Add Option</button>
-<br><br>
-<button ng-click="vm.addPoll()" ng-disabled="!vm.poll.name" class="btn btn-primary">Add Poll</button>
-<hr>
-{{selectedPollToGo}}
+<!--<h3>{{vm.title}}</h3>-->
+<nav class="navbar navbar-default">
+        <div class="container-fluid">
+             <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">VoteMyPoll</a>
+            </div> 
+              <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="/">Home</a></li>
+                </ul>
+        
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class= "btn btn-primary" ng-click="vm.createMyPoll()">Create</a></li>
+                    <li><a class= "btn btn-danger" ng-click="vm.logOut();">Logout</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<div ng-show="vm.create">
+    <input type="text" ng-model="vm.poll.name" placeholder="Name of poll..."  class="form-control" style="padding: 10px;">
+    <hr>
+    <input type="text" ng-model="vm.poll.options[$index].name" ng-repeat="option in vm.poll.options" placeholder="Option name" class="form-control" style="padding: 10px;">
+    <hr>
+    <button ng-click="vm.addOption()" class="btn btn-primary">Add Option</button>
+    <br><br>
+    <button ng-click="vm.addPoll()" ng-disabled="!vm.poll.name" class="btn btn-primary">Add Poll</button>
+</div>
+
+
+<h3>All your Polls:</h3>
 <div class="col-md-8">
     <ul>
          <li ng-repeat="poll in vm.polls"> 

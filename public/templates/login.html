@@ -1,9 +1,28 @@
-<h3>{{vm.title}}</h3>
-<hr>
-<h4 ng-if="vm.error">{{vm.error}}</h4>
+<!--<h3>{{vm.title}}</h3> -->
+<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+          <a class="navbar-brand" href="#">VoteMyPoll</a>
+          </div> 
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+ </nav>
+
+
+
+<h3>Login</h3>
 <br>
-<input type="text" ng-model="vm.user.name" class="form-control" placeholder="Name">
+<input type="text" ng-model="vm.user.name" class="form-control" placeholder="User Name">
 <br>
 <input type="password" ng-model="vm.user.password" class="form-control" placeholder="Password">
 <br>
 <button class="btn btn-success" ng-click="vm.login()" ng-disabled="!vm.user.name || !vm.user.password">Login</button>
+<h5>You don't have an account? click on Register</h5>
+<a class="btn btn-danger" href="/register">Register</a>
+<h4 ng-if="vm.error">{{vm.error.data}}</h4>

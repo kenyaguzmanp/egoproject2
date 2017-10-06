@@ -135,9 +135,11 @@
                      //redirect
                      $location.path('/profile');
                  }, function(err){
-                     vm.error = err.data.errmsg;
+                     //vm.error = err.data.errmsg;
+                     vm.error = "Sorry, this name is already taken";
+                     console.log("error: ", err); 
                  });
-               
+                   
         }
 
     }
@@ -190,6 +192,17 @@
                     name: '',
                     votes: 0
                 });
+            }
+
+            vm.createMyPoll = function(){
+                console.log("vas a crear un poll");
+                vm.create = true;
+            }
+
+            vm.logOut = function(){
+                delete $window.localStorage.token;
+                vm.user = null;
+                $location.path('/login');
             }
     
             vm.getAllPolls = function(){
@@ -380,17 +393,12 @@
                  })     
         }
         
+        vm.logOut = function(){
+            delete $window.localStorage.token;
+            vm.user = null;
+            $location.path('/login');
+        }
         
-
-        /*
-        vm.addOption =  function (){
-                vm.poll.options.push({
-                    name: '',
-                    votes: 0
-                });
-            }
-        
-        */
 
     }
 
