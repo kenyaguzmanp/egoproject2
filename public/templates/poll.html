@@ -1,20 +1,22 @@
 <h3>{{vm.title}}</h3>
 <h4>{{vm.thisPollIs.name}}</h4>
 <ul>
-    <li ng-repeat="option in vm.thisPoll.options">{{option.name}} --- {{option.votes}}
+    <li ng-repeat="option in vm.thisPollIs.options">{{option.name}} --- {{option.votes}}
     </li>
 </ul>
+<h4><a ng-click="vm.myPolls()">Yor Polls</a></h4>
 <div class="row">
     <div class="col-md-4">
        
         <select class="form-control input-lg" ng-model="selectedOption">
             <option ng-repeat="option in vm.thisPollIs.options">{{option.name}}</option>
         </select>
-        {{selectedOption}}
         <br>
-        <!--<input type="text" ng-model="vm.poll.options[$index].name" ng-repeat="option in vm.poll.options" placeholder="Option name" class="form-control" style="padding: 10px;"> -->
+        <input type="text" ng-model="newOption.name" placeholder="Option name" class="form-control" style="padding: 10px;"> 
         <button ng-click="vm.voteForThis()" ng-disabled="vm.voted || !(selectedOption)" class="btn btn-primary">Vote</button>
-        <button ng-click="vm.voteForThis()" ng-disabled="vm.voted || !(selectedOption)" class="btn btn-primary">More Options</button>
+        <button ng-click="vm.addOptionToThisPoll(newOption.name)" ng-disabled="!newOption.name" class="btn btn-primary">Add Option</button>
+        <!--<button ng-click="vm.addOtherOption" class="btn btn-primary">More Options</button> -->
+        
     </div>
     <div class="col-md-8">
         <!--
