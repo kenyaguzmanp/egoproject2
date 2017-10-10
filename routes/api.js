@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router({ caseSensitive: true });
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
-var User = require('../models/user');
-var Poll = require('../models/polls');
+//var User = require('../models/user');
+//var Poll = require('../models/polls');
+var Project = require('../models/projects');
 
-
+/*
 router.post('/polls/:id', function(request, response){
     console.log("EN POST DEL POLL ESPECIFICO");
     //console.log("RESPONSE EN EL POST:  ", response.req.headers.authorization);
@@ -24,10 +25,10 @@ router.post('/polls/:id', function(request, response){
     }) 
     
 
-});
+}); */
 
 
-
+/*
 router.get('/polls/:id', function(request, response){
     console.log("ENTRO A POLL");
     //console.log("request del poll en get REMOTE ADDRESS", request.connection.remoteAddress);
@@ -42,7 +43,7 @@ router.get('/polls/:id', function(request, response){
         return response.status(200).send(pol);
     })
 
-});
+}); */
 
 //delete a poll
 /*
@@ -63,140 +64,55 @@ router.post('/polls', authenticate, function(request, response){
 
 
 //Get all the polls
-router.get('/polls', authenticate, function(request, response){
-    console.log("ENTRO A POLLS");
+
+router.get('/projects',  function(request, response){
+    console.log("ENTRO AL GET DE PROJECTS");
     //console.log("con esta respuesta ", response.req.headers);
-    if(response.req.headers.authorization){
-        console.log("autorizado");
-    }
    
-    Poll.find({}, function(err, polls){
+    Project.find({}, function(err, projects){
         if(err){
             return response.status(400).send(err)
         }
-        if(polls.length < 1){
-            return response.status(400).send('No polls added yet')
+        if(projects.length < 1){
+            return response.status(400).send('No projects added yet')
         }
-        return response.status(200).send(polls)
+        return response.status(200).send(projects)
     }) 
-});
+}); 
 
 //CReate a new poll
-router.post('/polls', authenticate, function(request, response){
-    console.log("ENTRO A CREAR NEW POLL");
-    //console.log("el request body de create a new poll ", request.body);
-    if(!request.body.options || !request.body.name){
-        return response.status(400).send('No poll data supplied');
-    }
-    if(!request.body.toDelete){
-        var poll = new Poll();
-        poll.name = request.body.name;
-        poll.options = request.body.options;
-     //var token = request.headers.authorization.split(' ')[1];
-     //console.log("el supuesto token: " , request.headers.authorization.split(' ')[1] );
-       // poll.user = request.body._id;
-        poll.user = request.body.user;
-       // console.log("se creo el poll con este uduario id: " + poll.user);
+router.post('/projects', function(request, response){
+    console.log("ENTRO A CREAR NEW PROJECTO");
+    console.log("el request body de create a new poll ", request.body);
+    /*
+    if(!request.body.nombre || !request.body.rfi || !request.body.estado){
+        return response.status(400).send('No project data supplied');
+    }*/
+    var project = new Project();
+    project.nombre = request.body.nombre;
+    project.descripcion = request.body.descripcion;
+    project.rfi = request.body.rfi;
+    project.notas = request.body.notas;
+    project.estado = request.body.estado;
+    console.log("se creo el proyecto: " + project);
 
-        poll.save(function(err, res){
-            if(err){
-                return response.status(400).send(err)
-            }
-            return response.status(201).send(res)
-        });
-    }else{
-        console.log("se borrara");
-        var pollToDeleteId = request.body._id;
-       // console.log("el id del que quieres borrar es: " + pollToDeleteId);
-        Poll.remove({ _id: pollToDeleteId}, function(err, pol){
-            console.log("BORRANDO DE LA BD");
-            if(err){
-                return response.status(400).send(err)
-            }
-            return response.status(200).send(pol);
-        })
-    }
+   
+    project.save(function(err, res){
+        console.log("a punto de guardar proyecto, la respuesta es ", res);
+        if(err){
+            console.log("error al guardar en BD");
+            return response.status(400).send(err)
+        }
+        return response.status(201).send(res)
+    });
     
 });
 
 
-//verification of token
-router.post('/verify', function(request, response){
-   // console.log("el token en verify: ", request.body.token);
-    if(!request.body.token){
-        return response.status(400).send('No token has been provided');
-    }
-    jwt.verify(request.body.token, process.env.secret, function(err, decoded){
-        if(err){
-            return response.status(400).send('error with token')
-        }
-        return response.status(200).send(decoded)
-    });
-});
 
-//login
-router.post('/login', function(request, response){
-    if(request.body.name && request.body.password){
-        User.findOne({ name: request.body.name }, function(err, user){
-            if(err){
-                return response.status(400).send('An error has ocurred. lease try again.');
-            }
-            if(!user){
-                return response.status(404).send('No user registered with that credentials');
-            }
-            if(bcrypt.compareSync(request.body.password, user.password)){
-                var token = jwt.sign({
-                    data: user
-                }, process.env.secret, { expiresIn: 3600})
-                return response.status(200).send(token);
-            }
-            return response.status(400).send('Invalid password');
-        })
-    }else{
-        return response.status(400).send('Please enter valid credentials');
-    }
-});
 
-//register
 
-router.post('/register', function(request, response){
-    if(request.body.name && request.body.password){
-        var user = new User();
-        user.name = request.body.name;
-        user.password = bcrypt.hashSync(request.body.password, bcrypt.genSaltSync(10));
-        user.save(function(err, document){
-            if(err){
-                return response.status(400).send(err)
-            }else{
-                var token = jwt.sign({
-                    data: document
-                }, process.env.secret, { expiresIn: 3600});
-                return response.status(201).send(token);
-            }
-        });
-    }else{
-        return response.status(400).send({
-            message: 'Invalid credentials supplied'
-        })
-    }
-});
 
-//Authentication middleware
-function authenticate(request, response, next){
-    if(!request.headers.authorization){
-        return response.status(404).send('No token supplied')
-    }
-    if(request.headers.authorization.split(' ')[1]){
-        var token = request.headers.authorization.split(' ')[1];
-        jwt.verify(token, process.env.secret, function(err, decoded){
-            if(err){
-                return response.status(400).send(err)
-            }
-            console.log("continuig with middleware");
-            next();
-        })
-    }
-};
 
 
 module.exports = router;

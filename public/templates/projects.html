@@ -1,0 +1,56 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+      <a class="navbar-brand" href="#">EgoProject</a>
+      </div> 
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div>
+    <input type="text" ng-model="vm.project.nombre" placeholder="Nombre del proyecto..."  class="form-control" style="padding: 10px;">
+    <hr>
+    <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+    <input type="text" ng-model="vm.project.descripcion" placeholder="Descripcion del proyecto..."  class="form-control" style="padding: 10px">
+    <hr>
+    <input type="text" ng-model="vm.project.rfi" placeholder="RFI"  class="form-control" style="padding: 10px;">
+    <hr>
+    <div class="form-group">
+        <label for="exampleFormControlSelect2">Estado del Proyecto</label>
+        <select ng-model="vm.project.estado" class="form-control" id="exampleFormControlSelect2">
+          <option>Aprobado</option>
+          <option>Pendiente</option>
+          <option>Cancelado</option>
+        </select>
+      </div>
+    <br>
+    <input type="text" ng-model="vm.project.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
+    <hr>
+    <!--<input type="text" ng-model="vm.project.actividades" placeholder="Actividades"  class="form-control" style="padding: 10px;">
+    <hr> -->
+    <!--<button ng-click="vm.addActivities()" class="btn btn-primary">Agregar Actividades</button> -->
+    <br><br>
+    <button ng-click="vm.addProject()"  class="btn btn-primary">Agregar Proyecto</button>
+</div>
+
+<h3>All your Projects:</h3>
+<div class="col-md-8">
+    <ul>
+         <li ng-repeat="project in vm.projects"> 
+            <button  class="btn btn-primary">{{project.nombre}}</button>      
+         </li>
+    </ul>
+</div>
+<!--
+<div class="col-md-4"></div>
+<ul>
+    <li ng-repeat="poll in vm.polls"> 
+        <button ng-click="vm.goToThisPoll(poll)" class="btn btn-primary"> Go </button> </span> <span> <button ng-click="vm.deleteThisPoll(poll)" class="btn btn-danger">Delete </button> </span><span>   
+    </li>
+</ul> -->

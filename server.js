@@ -1,5 +1,5 @@
 //create db connection string
-var db='mongodb://127.0.0.1/votingapp';
+var db='mongodb://127.0.0.1/egoproject2';
 
 //create a port for the server to listen on
 var port =  process.env.PORT || 8000;
