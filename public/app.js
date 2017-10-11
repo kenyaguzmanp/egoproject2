@@ -209,7 +209,10 @@
                 }, function(err){
                     //vm.poll = {};
                 console.log(err);
-                }) 
+                })
+            vm.edit = false;
+            //vm.get = true;
+            vm.getThisProject(vm.projectToEdit) 
         }
 
 
