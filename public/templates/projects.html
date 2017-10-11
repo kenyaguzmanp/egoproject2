@@ -76,7 +76,7 @@
 <div class="col-md-6">
     <ul>
          <li ng-repeat="project in vm.projects"> 
-            <button  class="btn btn-primary">{{project.nombre}}</button>      
+            <button ng-click="vm.goToThisProject(project)" class="btn btn-primary">{{project.nombre}}</button>      
          </li>
     </ul>
 </div>

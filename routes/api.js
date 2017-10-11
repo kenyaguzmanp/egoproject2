@@ -28,22 +28,22 @@ router.post('/polls/:id', function(request, response){
 }); */
 
 
-/*
-router.get('/polls/:id', function(request, response){
-    console.log("ENTRO A POLL");
-    //console.log("request del poll en get REMOTE ADDRESS", request.connection.remoteAddress);
-    var idPoll = request.params.id;
-    //console.log("request del parametro ID en Poll " , idPoll);
 
-    Poll.find({ _id: idPoll}, function(err, pol){
+router.get('/projects/:id', function(request, response){
+    console.log("ENTRO A PROYECTO");
+    //console.log("request del poll en get REMOTE ADDRESS", request.connection.remoteAddress);
+    var idProject = request.params.id;
+    console.log("request del parametro ID en Proyecto " , idProject);
+    
+    Project.find({ _id: idProject}, function(err, pro){
         console.log("buscando en la BD");
         if(err){
             return response.status(400).send(err)
         }
-        return response.status(200).send(pol);
+        return response.status(200).send(pro);
     })
 
-}); */
+}); 
 
 //delete a poll
 /*

@@ -1,0 +1,18 @@
+<h3>{{vm.thisProject.nombre}}</h3>
+<h3>RFI: {{vm.thisProject.rfi}}</h3>
+<h3>Estado: {{vm.thisProject.estado}}</h3>
+<p>{{vm.thisProject.descripcion}}</p>
+<p>{{vm.thisProject.notas}}</p>
+
+
+<div>
+    <ul>
+        <li ng-repeat="actividad in vm.thisProject.actividades"> 
+             <span>{{actividad.fecha}}</span> -- <span>{{actividad.estimadas}}</span> -- <span>{{actividad.finalizadas}}</span>     
+        </li>
+    </ul>
+</div>
+
+<div>
+    <div id="piechart" style="width: 900px; height: 500px;"></div> 
+</div>

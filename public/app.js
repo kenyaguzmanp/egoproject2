@@ -38,6 +38,15 @@
             }
         });
 
+        $routeProvider.when('/projects/:id', {
+            templateUrl: './templates/project.html',
+            controller: 'ProjectController',
+            controllerAs: 'vm',
+            access: {
+                restricted: false
+            }
+        });
+
         $routeProvider.when('/projects', {
             templateUrl: './templates/projects.html',
             controller: 'ProjectsController',
@@ -61,6 +70,51 @@
         vm.title = "MainController";
         console.log('in main controller');
     }
+
+    app.controller('ProjectController', ProjectController);
+    
+        function ProjectController($location, $window, $http){
+            var vm = this;
+            vm.title = "ProjectController";
+            console.log('in proyect controller');
+            vm.thisProjectId = $location.path().slice(10);
+            console.log("thisprojectid " + vm.thisProjectId);
+            
+            $http.get('/api/projects/' + vm.thisProjectId)
+                .then(function(response){
+                    console.log("response del project en general ", response.data);
+                   // console.log("data del poll: ", response.data[0]);
+                   vm.thisProject = response.data[0];
+                }, function(err){
+                    console.log(err);
+                })
+                
+            vm.showTheChart = function(){
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                var data =[['Fecha', 'Estimadas', 'Finalizadas']];
+                function drawChart() {
+                    for(var k=0; k<vm.thisProject.actividades.length; k++){
+                        data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
+                    }
+                    console.log("data: "+ data);
+                data = google.visualization.arrayToDataTable(data);        
+
+
+                var options = {
+                    title: "Grafico"
+                };
+                    
+                //var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+               var chart = new google.visualization.BarChart(document.getElementById('piechart'));    
+                    chart.draw(data, options);
+                }
+
+            }
+            vm.showTheChart();    
+        }
+    
+
 
     app.controller('ProjectsController', ProjectsController);
 
@@ -130,7 +184,13 @@
             };
         }
 
-       
+        vm.goToThisProject = function(thisProject){             
+            console.log("the poll you selected: " , thisProject);
+            var id = thisProject._id;
+           // console.log("id " + id);
+           // vm.selectedPoll = thisPoll;
+            $location.path("/projects/" + id);                      
+        }
 
     }
 
