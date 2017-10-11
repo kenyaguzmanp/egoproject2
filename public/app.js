@@ -150,6 +150,11 @@
         }
                 vm.getAllProjects()
 
+        vm.createProject = function (){
+            vm.create = true;
+            vm.chart = false;
+        }        
+
         //crear un nuevo proyecto
         vm.addProject = function(){
             console.log("el proyecto a subir: ", vm.project);
@@ -190,6 +195,37 @@
            // console.log("id " + id);
            // vm.selectedPoll = thisPoll;
             $location.path("/projects/" + id);                      
+        }
+
+        vm.graphicThisProject = function(project){
+            console.log(project);
+            vm.thisProject = project;
+            vm.chart = true;
+            vm.create = false;
+            vm.showTheChart();
+        }
+
+        vm.showTheChart = function(){
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            var data =[['Fecha', 'Estimadas', 'Finalizadas']];
+            function drawChart() {
+                for(var k=0; k<vm.thisProject.actividades.length; k++){
+                    data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
+                }
+                console.log("data: "+ data);
+            data = google.visualization.arrayToDataTable(data);        
+
+
+            var options = {
+                title: "Grafico"
+            };
+                
+            //var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+           var chart = new google.visualization.BarChart(document.getElementById('chart'));    
+                chart.draw(data, options);
+            }
+
         }
 
     }
