@@ -16,3 +16,21 @@
 <div>
     <div id="piechart" style="width: 900px; height: 500px;"></div> 
 </div>
+
+<table ng-table="vm.tableParams" class="table" show-filter="true">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estimadas</th>
+                <th>Finalizadas</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="actividad in vm.thisProject.actividades">
+            <td title="'Fecha'" filter="{ fecha: 'text'}" sortable="'fecha'">
+                {{actividad.fecha}}</td>
+            <td title="'Estimadas'" filter="{ estimadas: 'number'}" sortable="'estimadas'">
+                {{actividad.estimadas}}</td>
+                <td title="'Estimadas'" filter="{ estimadas: 'number'}" sortable="'estimadas'">
+                        {{actividad.finalizadas}}</td>
+        </tr>
+</table>

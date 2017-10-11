@@ -153,6 +153,7 @@
         vm.createProject = function (){
             vm.create = true;
             vm.chart = false;
+            vm.get = false;
         }        
 
         //crear un nuevo proyecto
@@ -197,11 +198,17 @@
             $location.path("/projects/" + id);                      
         }
 
+        vm.getThisProject = function(project){
+            vm.get = true;
+            vm.thisProject = project;
+        }
+
         vm.graphicThisProject = function(project){
             console.log(project);
             vm.thisProject = project;
             vm.chart = true;
             vm.create = false;
+            vm.get = false;
             vm.showTheChart();
         }
 

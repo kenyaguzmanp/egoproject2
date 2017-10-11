@@ -19,6 +19,7 @@
         <ul>
             <li ng-repeat="project in vm.projects"> 
                 <span><button ng-click="vm.goToThisProject(project)" class="btn btn-primary">{{project.nombre}}</button>  </span>
+                <span><button ng-click="vm.getThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></button></span>
                 <span><button ng-click="vm.graphicThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></button></span>
                 <!--<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>-->
                 <span><button ng-click="vm.editThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></span>        
@@ -70,9 +71,46 @@
         <button ng-click="vm.addProject()"  class="btn btn-primary">Agregar Proyecto</button>
     </div>
 
-    <div ng-show="vm.chart">
-        <div id="chart" style="width: 900px; height: 500px;"></div> 
+    
+    <div ng-show="vm.get">
+        <h3>{{vm.thisProject.nombre}}</h3>
+        <h3>RFI: {{vm.thisProject.rfi}}</h3>
+        <h3>Estado: {{vm.thisProject.estado}}</h3>
+        <p>{{vm.thisProject.descripcion}}</p>
+        <p>{{vm.thisProject.notas}}</p>
+        <div>
+            <ul>
+                <li ng-repeat="actividad in vm.thisProject.actividades"> 
+                     <span>{{actividad.fecha}}</span> -- <span>{{actividad.estimadas}}</span> -- <span>{{actividad.finalizadas}}</span>     
+                </li>
+            </ul>
+        </div>
     </div>
+
+    <div ng-show="vm.chart">
+        <div id="chart" style="width: 900px; height: 500px;"></div>
+        <div>
+            <table ng-table="vm.tableParams" class="table" show-filter="true">
+                  <thead>
+                      <tr>
+                          <th>Fecha</th>
+                          <th>Estimadas</th>
+                          <th>Finalizadas</th>
+                      </tr>
+                  </thead>
+                  <tr ng-repeat="actividad in vm.thisProject.actividades">
+                      <td title="'Fecha'" filter="{ fecha: 'text'}" sortable="'fecha'">
+                          {{actividad.fecha}}</td>
+                      <td title="'Estimadas'" filter="{ estimadas: 'number'}" sortable="'estimadas'">
+                          {{actividad.estimadas}}</td>
+                          <td title="'Estimadas'" filter="{ estimadas: 'number'}" sortable="'estimadas'">
+                                  {{actividad.finalizadas}}</td>
+                  </tr>
+           </table>
+          </div> 
+    </div>
+
+    
       
   </div>
   
