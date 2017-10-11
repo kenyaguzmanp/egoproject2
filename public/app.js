@@ -230,6 +230,26 @@
             vm.thisProject = project;
         }
 
+        vm.deleteThisProject = function(thisproject){
+            //console.log("you want to delete this project: ", thisproject);
+            if(confirm("Are you sure you want to delete this Project?")){
+                console.log("you want to delete this: " , thisproject);
+                
+                vm.projectToDelete = thisproject;  
+                vm.projectToDelete.borrar = true;          
+                $http.post('/api/projects', vm.projectToDelete)
+                    .then(function(response){
+                        //vm.poll = {};
+                        //vm.getAllPolls();
+                    }, function(err){
+                        //vm.poll = {};
+                    console.log(err);
+                }) 
+                vm.getAllProjects()    
+
+            }
+        }
+
         vm.graphicThisProject = function(project){
             console.log(project);
             vm.thisProject = project;

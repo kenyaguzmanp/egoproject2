@@ -84,6 +84,28 @@ router.get('/projects',  function(request, response){
 router.post('/projects', function(request, response){
     console.log("ENTRO A CREAR NEW PROJECTO");
     console.log("el request body de create a new project ", request.body);
+
+    if(request.body.borrar){
+        console.log("se va a borrar el proyecto: ");
+        var projectIdToDelete = request.body._id;
+        var projectToDelete = {"estado" : request.body.estado,
+        "notas": request.body.notas,
+        "rfi": request.body.rfi,
+        "descripcion": request.body.descripcion,
+        "nombre": request.body.nombre,
+        "actividades": request.body.actividades,
+                            };
+        console.log("se borrara : ", projectToDelete);
+
+        Project.remove({ _id: projectIdToDelete}, function(err, pol){
+            console.log("BORRANDO DE LA BD");
+            if(err){
+                return response.status(400).send(err)
+            }
+            return response.status(200).send(pol);
+        })
+
+    }
     
     if(request.body.cambiar){
         var projectIdToUpdate = request.body._id;
@@ -114,7 +136,7 @@ router.post('/projects', function(request, response){
             console.log("response en actualizacion de bd ", response);
           });
 
-    }else{
+    }if(request.body.crear){
         console.log("se creara un proyecto");
         var project = new Project();
         project.nombre = request.body.nombre;
