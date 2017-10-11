@@ -71,6 +71,35 @@
         <button ng-click="vm.addProject()"  class="btn btn-primary">Agregar Proyecto</button>
     </div>
 
+
+    <div ng-show="vm.edit">
+        <label>Nombre</label>
+        <input type="text" ng-model="vm.projectToEdit.nombre" placeholder="Nombre del proyecto..."  class="form-control" style="padding: 10px;">
+        <hr>
+        <label>Descrición</label>
+        <input type="text" ng-model="vm.projectToEdit.descripcion" placeholder="Descripcion del proyecto..."  class="form-control" style="padding: 10px">
+        <hr>
+        <label>RFI</label>
+        <input type="number" ng-model="vm.projectToEdit.rfi" placeholder="RFI"  class="form-control" style="padding: 10px;">
+        <hr>
+        <div class="form-group">
+            <label for="SelectEstado">Estado del Proyecto</label>
+            <select ng-model="vm.projectToEdit.estado" class="form-control" id="SelectEstado">
+              <option>Aprobado</option>
+              <option>Pendiente</option>
+              <option>Cancelado</option>
+            </select>
+          </div>
+        <br>
+        <label>Notas</label>
+        <input type="text" ng-model="vm.projectToEdit.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
+        <hr>
+          
+        <br>
+        <button ng-click="vm.saveChanges()"  class="btn btn-primary">Guardar Cambios</button>
+    </div>
+
+
     
     <div ng-show="vm.get">
         <h3>{{vm.thisProject.nombre}}</h3>

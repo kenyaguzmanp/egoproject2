@@ -6,6 +6,35 @@
 
 
 <div>
+    <label>Nombre</label>
+    <input type="text" ng-model="vm.project.nombre" placeholder="Nombre del proyecto..."  class="form-control" style="padding: 10px;">
+    <hr>
+    <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+    <label>Descrición</label>
+    <input type="text" ng-model="vm.project.descripcion" placeholder="Descripcion del proyecto..."  class="form-control" style="padding: 10px">
+    <hr>
+    <label>RFI</label>
+    <input type="number" ng-model="vm.project.rfi" placeholder="RFI"  class="form-control" style="padding: 10px;">
+    <hr>
+    <div class="form-group">
+        <label for="SelectEstado">Estado del Proyecto</label>
+        <select ng-model="vm.project.estado" class="form-control" id="SelectEstado">
+          <option>Aprobado</option>
+          <option>Pendiente</option>
+          <option>Cancelado</option>
+        </select>
+      </div>
+    <br>
+    <label>Notas</label>
+    <input type="text" ng-model="vm.project.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
+      
+    <br>
+    <button ng-click="vm.addProject()"  class="btn btn-primary">Guardar Cambios</button>
+</div>
+
+
+
+<div>
     <ul>
         <li ng-repeat="actividad in vm.thisProject.actividades"> 
              <span>{{actividad.fecha}}</span> -- <span>{{actividad.estimadas}}</span> -- <span>{{actividad.finalizadas}}</span>     

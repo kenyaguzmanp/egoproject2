@@ -190,6 +190,29 @@
             };
         }
 
+        vm.editThisProject = function(project){
+            vm.edit = true;
+            console.log("en edit project ");
+            vm.projectToEdit = project;
+            console.log("scope project to edit ", vm.projectToEdit);
+        }
+
+        vm.saveChanges = function (){
+            console.log("se guardaran lso cambios del proyecto: ", vm.projectToEdit);
+            vm.projectToEdit.cambiar = true;
+            $http.post('/api/projects', vm.projectToEdit)
+                .then(function(response){
+                    console.log("response del post de savechanges", response);
+                    //$window.localStorage.token = response.data;
+                    //vm.thisPollIs = {};
+                    //vm.getAllPolls();
+                }, function(err){
+                    //vm.poll = {};
+                console.log(err);
+                }) 
+        }
+
+
         vm.goToThisProject = function(thisProject){             
             console.log("the poll you selected: " , thisProject);
             var id = thisProject._id;
@@ -200,6 +223,7 @@
 
         vm.getThisProject = function(project){
             vm.get = true;
+            vm.create = false;
             vm.thisProject = project;
         }
 

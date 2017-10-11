@@ -84,28 +84,58 @@ router.get('/projects',  function(request, response){
 router.post('/projects', function(request, response){
     console.log("ENTRO A CREAR NEW PROJECTO");
     console.log("el request body de create a new project ", request.body);
-    /*
-    if(!request.body.nombre || !request.body.rfi || !request.body.estado){
-        return response.status(400).send('No project data supplied');
-    }*/
-    var project = new Project();
-    project.nombre = request.body.nombre;
-    project.descripcion = request.body.descripcion;
-    project.rfi = request.body.rfi;
-    project.notas = request.body.notas;
-    project.estado = request.body.estado;
-    project.actividades = request.body.actividades;
-    console.log("se creo el proyecto: " + project);
+    
+    if(request.body.cambiar){
+        var projectIdToUpdate = request.body._id;
+        var projectToUpdate = {"estado" : request.body.estado,
+        "notas": request.body.notas,
+        "rfi": request.body.rfi,
+        "descripcion": request.body.descripcion,
+        "nombre": request.body.nombre,
+        "actividades": request.body.actividades,
+                            };
+        console.log("se cambiara a: ", projectToUpdate);
+        /*
+        Project.update({ _id: projectIdToUpdate},{ $set: {rfi : projectToUpdate}}, function(err, response){
+            console.log("actualizando en bd");
+            if(err){
+                return response.status(400).send(err)
+                //console.log("error en acualizar en BD")
+            }
+            console.log("response en actualizacion de bd ", response);
+        }) */
+        
+        Project.updateOne({ _id: projectIdToUpdate}, projectToUpdate, function(err, response) {
+            console.log("actualizando en bd");
+            if(err){
+                return response.status(400).send(err)
+                //console.log("error en acualizar en BD")
+            }
+            console.log("response en actualizacion de bd ", response);
+          });
 
-   
-    project.save(function(err, res){
-        console.log("a punto de guardar proyecto, la respuesta es ", res);
-        if(err){
-            console.log("error al guardar en BD");
-            return response.status(400).send(err)
-        }
-        return response.status(201).send(res)
-    });
+    }else{
+        console.log("se creara un proyecto");
+        var project = new Project();
+        project.nombre = request.body.nombre;
+        project.descripcion = request.body.descripcion;
+        project.rfi = request.body.rfi;
+        project.notas = request.body.notas;
+        project.estado = request.body.estado;
+        project.actividades = request.body.actividades;
+        console.log("se creo el proyecto: " + project);
+    
+       
+        project.save(function(err, res){
+            console.log("a punto de guardar proyecto, la respuesta es ", res);
+            if(err){
+                console.log("error al guardar en BD");
+                return response.status(400).send(err)
+            }
+            return response.status(201).send(res)
+        });
+    }
+    
     
 });
 
