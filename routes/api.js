@@ -83,7 +83,7 @@ router.get('/projects',  function(request, response){
 //CReate a new poll
 router.post('/projects', function(request, response){
     console.log("ENTRO A CREAR NEW PROJECTO");
-    console.log("el request body de create a new poll ", request.body);
+    console.log("el request body de create a new project ", request.body);
     /*
     if(!request.body.nombre || !request.body.rfi || !request.body.estado){
         return response.status(400).send('No project data supplied');
@@ -94,6 +94,7 @@ router.post('/projects', function(request, response){
     project.rfi = request.body.rfi;
     project.notas = request.body.notas;
     project.estado = request.body.estado;
+    project.actividades = request.body.actividades;
     console.log("se creo el proyecto: " + project);
 
    

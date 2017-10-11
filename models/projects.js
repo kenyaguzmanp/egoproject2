@@ -28,7 +28,21 @@ var ProjectsSchema =  new Schema({
         type: String,
         required: true
         //unique: true,       
-    }
+    },
+    actividades: [{
+        fecha: {
+            type: Date,
+            required: true
+        },
+        estimadas: {
+            type: Number,
+            required: true
+        },
+        finalizadas: {
+            type: Number,
+            required: true
+        }
+    }]
 
 });
 

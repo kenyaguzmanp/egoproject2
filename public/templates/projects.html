@@ -13,39 +13,74 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div>
+<div class="row">
+
+<div col-md-6>
+    <label>Nombre</label>
     <input type="text" ng-model="vm.project.nombre" placeholder="Nombre del proyecto..."  class="form-control" style="padding: 10px;">
     <hr>
     <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+    <label>Descrición</label>
     <input type="text" ng-model="vm.project.descripcion" placeholder="Descripcion del proyecto..."  class="form-control" style="padding: 10px">
     <hr>
-    <input type="text" ng-model="vm.project.rfi" placeholder="RFI"  class="form-control" style="padding: 10px;">
+    <label>RFI</label>
+    <input type="number" ng-model="vm.project.rfi" placeholder="RFI"  class="form-control" style="padding: 10px;">
     <hr>
     <div class="form-group">
-        <label for="exampleFormControlSelect2">Estado del Proyecto</label>
-        <select ng-model="vm.project.estado" class="form-control" id="exampleFormControlSelect2">
+        <label for="SelectEstado">Estado del Proyecto</label>
+        <select ng-model="vm.project.estado" class="form-control" id="SelectEstado">
           <option>Aprobado</option>
           <option>Pendiente</option>
           <option>Cancelado</option>
         </select>
       </div>
     <br>
+    <label>Notas</label>
     <input type="text" ng-model="vm.project.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
     <hr>
     <!--<input type="text" ng-model="vm.project.actividades" placeholder="Actividades"  class="form-control" style="padding: 10px;">
     <hr> -->
-    <!--<button ng-click="vm.addActivities()" class="btn btn-primary">Agregar Actividades</button> -->
-    <br><br>
+    <button ng-click="vm.addActivities = true" class="btn btn-primary">Agregar Actividades</button>
+    <br>
+    <div ng-show="vm.addActivities">
+        <label>Fecha</label> <!-- ng-model="vm.project.actividades[0].fecha" -->
+        <input class="form-control" id="date" type="date" ng-model="vm.actividad.fecha" min="2017-10-11" max="2017-10-30">
+        <br>
+        <label>Estimadas</label>
+        <input type="number"  placeholder="Estimadas" ng-model="vm.actividad.estimadas"  class="form-control" style="padding: 10px;">
+        <br>
+        <label>Finalizadas</label>
+        <input type="number"  placeholder="Finalizadas" ng-model="vm.actividad.finalizadas"  class="form-control" style="padding: 10px;">
+        <br>
+        <button ng-click="vm.addActivity()" class="btn btn-primary">Otra Actividad</button>
+    </div>
+      
+    <!--
+    <div>
+        <input type="date" ng-model="vm.poll.name" placeholder="Name of poll..."  class="form-control" style="padding: 10px;">
+        <hr>
+        <input type="text" ng-model="vm.poll.options[$index].name" ng-repeat="option in vm.poll.options" placeholder="Option name" class="form-control" style="padding: 10px;">
+        <hr>
+        <button ng-click="vm.addOption()" class="btn btn-primary">Add Option</button>
+        <br><br>
+        <button ng-click="vm.addPoll()" ng-disabled="!vm.poll.name" class="btn btn-primary">Add Poll</button>
+    </div> -->
+
+
+
+    <br>
     <button ng-click="vm.addProject()"  class="btn btn-primary">Agregar Proyecto</button>
 </div>
 
 <h3>All your Projects:</h3>
-<div class="col-md-8">
+<div class="col-md-6">
     <ul>
          <li ng-repeat="project in vm.projects"> 
             <button  class="btn btn-primary">{{project.nombre}}</button>      
          </li>
     </ul>
+</div>
+
 </div>
 <!--
 <div class="col-md-4"></div>

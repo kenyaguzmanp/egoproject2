@@ -74,21 +74,15 @@
             rfi: '',
             notas: ''
         };
+        
+        vm.project.actividades = [];
+        vm.actividad = {
+            fecha: '',
+            estimadas: '',
+            finalizadas: ''
+        };
 
-        /*
-        vm.testJson = function (){
-            $http.get("proyects.json")
-                 .then(function(response){
-                    //var dat = response.data;
-                    console.log(response);
-                    $scope.proyectos = response.data;
-                    console.log($scope.proyectos);
-                 }, function(err){
-                     console.log(err);
-                 })
-        } */
 
-       // vm.testJson();
         vm.getAllProjects = function(){
             $http.get('/api/projects')
                  .then(function(response){
@@ -122,6 +116,20 @@
                     console.log(err);
                  })  
         }
+
+            
+        vm.addActivity = function(){
+            vm.activitiesButton = false;
+            console.log("la actividad a subir ", vm.actividad);
+            vm.project.actividades.push(vm.actividad);
+            console.log("las actividades totales son: ", vm.project.actividades); 
+            vm.actividad = {
+                fecha: '',
+                estimadas: '',
+                finalizadas: ''
+            };
+        }
+
        
 
     }
