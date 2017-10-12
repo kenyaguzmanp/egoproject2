@@ -206,17 +206,7 @@
             vm.get = true;
             vm.create = false;
             vm.thisProject = project;
-            /*
-            var actividadesFormat = [];
-            for(var k=0; k<vm.thisProject.actividades.length; k++){
-                var fechaFormat = wm.thisProject.actividades[f].fecha;
-                var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
-                actividadesFormat[f] = dateString;
-                vm.thisProject.actividades[f].fecha = actividadesFormat[f];
-                //console.log("fecha en string " , dateString);
-            }*/
             
-
         }
 
         vm.deleteThisProject = function(thisproject){

@@ -58,7 +58,6 @@
         <label>Nombre</label>
         <input type="text" ng-model="vm.project.nombre" placeholder="Nombre del proyecto..."  class="form-control" style="padding: 10px;">
         <br>
-        <!--<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
         <label>Descrición</label>
         <input type="text" ng-model="vm.project.descripcion" placeholder="Descripcion del proyecto..."  class="form-control" style="padding: 10px">
         <br>
@@ -82,7 +81,7 @@
         <button ng-click="vm.addActivities = true" class="btn btn-primary">Agregar Actividades</button>
         <br>
         <div ng-show="vm.addActivities">
-            <label>Fecha</label> <!-- ng-model="vm.project.actividades[0].fecha" -->
+            <label>Fecha</label> 
             <input class="form-control" id="date" type="date" ng-model="vm.actividad.fecha" min="2017-10-11" max="2017-10-30">
             <br>
             <label>Estimadas</label>
@@ -121,7 +120,21 @@
         <label>Notas</label>
         <input type="text" ng-model="vm.projectToEdit.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
         <hr>
-          
+
+        <!--
+       <ul>
+            <li ng-repeat="actividad in vm.projectToEdit.actividades">
+                {{actividad}}
+                <label>Fecha {{actividad.fecha}}</label> 
+                <input class="form-control" id="date" type="date" ng-model="vm.actividad.fecha"> 
+                <br>
+                <label>Estimadas{{actividad.estimadas}}</label>
+                <input type="number"  placeholder="Estimadas" ng-model="vm.actividad[$index].estimadas"  class="form-control" style="padding: 10px;">
+                <br>
+                <label>Finalizadas</label>
+                <input type="number"  placeholder="Finalizadas" ng-model="vm.actividad.finalizadas"  class="form-control" style="padding: 10px;">    
+            </li>
+        </ul>   -->
         <br>
         <button ng-click="vm.saveChanges()"  class="btn btn-primary">Guardar Cambios</button>
     </div>
@@ -130,8 +143,8 @@
     
     <div ng-show="vm.get">
         <h3>{{vm.thisProject.nombre}}</h3>
-        <h3>RFI: {{vm.thisProject.rfi}}</h3>
-        <h3>Estado: {{vm.thisProject.estado}}</h3>
+        <h4>RFI: {{vm.thisProject.rfi}}</h4>
+        <h4>Estado: {{vm.thisProject.estado}}</h4>
         <p>{{vm.thisProject.descripcion}}</p>
         <p>{{vm.thisProject.notas}}</p>
         <div>
