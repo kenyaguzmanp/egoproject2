@@ -206,6 +206,17 @@
             vm.get = true;
             vm.create = false;
             vm.thisProject = project;
+            /*
+            var actividadesFormat = [];
+            for(var k=0; k<vm.thisProject.actividades.length; k++){
+                var fechaFormat = wm.thisProject.actividades[f].fecha;
+                var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+                actividadesFormat[f] = dateString;
+                vm.thisProject.actividades[f].fecha = actividadesFormat[f];
+                //console.log("fecha en string " , dateString);
+            }*/
+            
+
         }
 
         vm.deleteThisProject = function(thisproject){
@@ -230,7 +241,18 @@
 
         vm.graphicThisProject = function(project){
             console.log(project);
-            vm.thisProject = project;
+            var thisProjectToChart = project;
+            
+            var actividadesFormat = [];
+            for(var f=0; f< thisProjectToChart.actividades.length; f++){
+                var fechaFormat = thisProjectToChart.actividades[f].fecha;
+                var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+                actividadesFormat[f] = dateString;
+                thisProjectToChart.actividades[f].fecha = actividadesFormat[f];
+                //console.log("fecha en string " , dateString);
+            }
+            vm.thisProject =  thisProjectToChart;
+
             vm.chart = true;
             vm.create = false;
             vm.get = false;
@@ -243,8 +265,10 @@
             var data =[['Fecha', 'Estimadas', 'Finalizadas']];
             function drawChart() {
                 for(var k=0; k<vm.thisProject.actividades.length; k++){
-                    var fechaFormat = vm.thisProject.actividades[k].fecha.slice(0, 9);
-                    data[k+1] = [fechaFormat, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];                    
+                    var fechaFormat = vm.thisProject.actividades[k].fecha;
+                    var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+                    console.log("fecha en string " , dateString);
+                    data[k+1] = [dateString, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];                    
                     //data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
                 }
                 console.log("data: "+ data);

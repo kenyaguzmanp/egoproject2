@@ -145,7 +145,18 @@ router.post('/projects', function(request, response){
         project.notas = request.body.notas;
         project.estado = request.body.estado;
         project.actividades = request.body.actividades;
-        console.log("se creo el proyecto: " + project);
+        /*
+        var actividadesFormat=[];
+        for(var f=0; f < project.actividades.length; f++){
+            var fechaFormat = project.actividades[f].fecha;
+            var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+            actividadesFormat[f] = dateString;
+            project.actividades[f].fecha = actividadesFormat[f];
+            console.log("fecha en string " , dateString);
+        }
+        console.log("las actividades en nuevo formato: ", actividadesFormat); 
+        //project.actividades = actividadesFormat;
+        console.log("se creo el proyecto: " + project); */
     
        
         project.save(function(err, res){
