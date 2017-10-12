@@ -1,6 +1,6 @@
 (function() {
     //building our module
-    var app = angular.module('app', ['ngRoute', 'angular-jwt']);
+    var app = angular.module('app', ['ngRoute', 'angular-jwt', 'angularCSS']);
 
     app.config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
@@ -19,6 +19,7 @@
             templateUrl: './templates/project.html',
             controller: 'ProjectController',
             controllerAs: 'vm',
+            css: './stylesheets/style.css',
             access: {
                 restricted: false
             }
@@ -28,6 +29,7 @@
             templateUrl: './templates/projects.html',
             controller: 'ProjectsController',
             controllerAs: 'vm',
+            css: './stylesheets/style.css',
             access: {
                 restricted: false
             }
@@ -112,7 +114,7 @@
             estimadas: '',
             finalizadas: ''
         };
-
+        vm.tes = '';
 
         vm.getAllProjects = function(){
             $http.get('/api/projects')
@@ -200,13 +202,22 @@
            // console.log("id " + id);
            // vm.selectedPoll = thisPoll;
             $location.path("/projects/" + id);                      
-        }
+        }   
 
         vm.getThisProject = function(project){
             vm.get = true;
             vm.create = false;
             vm.thisProject = project;
-            
+            vm.tes = vm.thisProject._id;
+            console.log("vm.tes: " + vm.tes);
+            console.log("proyecto seleccionado: ", vm.thisProject);
+            console.log("vm.projects", vm.projects);
+            vm.selectedProjectStyle = {
+                "color" : "white",
+                "background-color" : "coral"
+            }
+            //vm.getAllProjects();
+
         }
 
         vm.deleteThisProject = function(thisproject){

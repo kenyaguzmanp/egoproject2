@@ -37,19 +37,23 @@
             <br>
             
         </div>
-
-
-        <h3>All your Projects:</h3>
+        
+        <!-- ng-class="{'selected': vm.enabled}"  ng-class="{true: 'icon-pfeil_unten', false: 'icon-pfeil-oben'}[category == 16]-->
+        <h3 ng-style="vm.selectedProjectStyle">All your Projects:</h3>
         <ul>
             <li ng-repeat="project in vm.projects | filter : searchAll | filter : searchEstado | filter : searchRfi | filter : searchDescripcion | filter : searchEstado | filter : searchNotas"> 
-                <span><button ng-click="vm.goToThisProject(project)" class="btn btn-primary">{{project.nombre}}</button>  </span>
+                <span><button ng-click="vm.goToThisProject(project)" ng-class="{true:'selected'}[project._id === vm.tes]" class="btn btn-primary">{{project.nombre}}</button>  </span>
                 <span><button ng-click="vm.getThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></button></span>
                 <span><button ng-click="vm.graphicThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></button></span>
                 <!--<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>-->
                 <span><button ng-click="vm.editThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></span>
-                <span><button ng-click="vm.deleteThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></span>          
+                <span><button ng-click="vm.deleteThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></span>
+                    
             </li>
+            
         </ul>
+
+
         <button ng-click="vm.createProject()" class="btn btn-danger"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
     </div>
 
