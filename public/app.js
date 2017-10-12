@@ -240,23 +240,30 @@
         }
 
         vm.graphicThisProject = function(project){
-            console.log(project);
-            var thisProjectToChart = project;
-            
-            var actividadesFormat = [];
-            for(var f=0; f< thisProjectToChart.actividades.length; f++){
-                var fechaFormat = thisProjectToChart.actividades[f].fecha;
-                var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
-                actividadesFormat[f] = dateString;
-                thisProjectToChart.actividades[f].fecha = actividadesFormat[f];
-                //console.log("fecha en string " , dateString);
+            //var thisProjectToChart = project;  
+            if(project.actividades.length < 1){
+                vm.thisProject =  project;
+                console.log("no hay actividades para mostrar");
+                vm.chart = false;
+               // vm.nochart = true;
             }
-            vm.thisProject =  thisProjectToChart;
-
-            vm.chart = true;
-            vm.create = false;
-            vm.get = false;
-            vm.showTheChart();
+            else{
+                var thisProjectToChart = project;           
+                var actividadesFormat = [];
+                for(var f=0; f< thisProjectToChart.actividades.length; f++){
+                    var fechaFormat = thisProjectToChart.actividades[f].fecha;
+                    var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+                    actividadesFormat[f] = dateString;
+                    thisProjectToChart.actividades[f].fecha = actividadesFormat[f];
+                }
+                vm.thisProject =  thisProjectToChart;
+    
+                vm.chart = true;
+                vm.create = false;
+                vm.get = false;
+                vm.showTheChart();
+            }
+            
         }
 
         vm.showTheChart = function(){
