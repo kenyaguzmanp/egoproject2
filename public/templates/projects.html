@@ -41,7 +41,7 @@
             
         </div>
         
-        <h3>All your Projects:</h3>
+        <h3>All your Projects</h3>
         <ul>
             <li ng-repeat="project in vm.projects | filter : searchAll | filter : searchEstado | filter : searchRfi | filter : searchDescripcion | filter : searchEstado | filter : searchNotas">
                 <div>
@@ -127,21 +127,6 @@
         <label>Notas</label>
         <input type="text" ng-model="vm.projectToEdit.notas" placeholder="Notas"  class="form-control" style="padding: 10px;">
         <hr>
-
-        <!--
-       <ul>
-            <li ng-repeat="actividad in vm.projectToEdit.actividades">
-                {{actividad}}
-                <label>Fecha {{actividad.fecha}}</label> 
-                <input class="form-control" id="date" type="date" ng-model="vm.actividad.fecha"> 
-                <br>
-                <label>Estimadas{{actividad.estimadas}}</label>
-                <input type="number"  placeholder="Estimadas" ng-model="vm.actividad[$index].estimadas"  class="form-control" style="padding: 10px;">
-                <br>
-                <label>Finalizadas</label>
-                <input type="number"  placeholder="Finalizadas" ng-model="vm.actividad.finalizadas"  class="form-control" style="padding: 10px;">    
-            </li>
-        </ul>   -->
         <br>
         <button ng-click="vm.saveChanges()"  class="btn btn-primary">Guardar Cambios</button>
     </div>

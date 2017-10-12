@@ -154,7 +154,8 @@
                  }, function(err){
                      vm.project = {};
                     console.log(err);
-                 })  
+                 })
+            vm.getThisProject(vm.project);       
         }
 
             
@@ -172,9 +173,13 @@
 
         vm.editThisProject = function(project){
             vm.edit = true;
+            vm.create = false;
+            vm.chart = false;
+            vm.get = false;
             console.log("en edit project ");
             vm.projectToEdit = project;
             console.log("scope project to edit ", vm.projectToEdit);
+            
         }
 
         vm.saveChanges = function (){
@@ -207,6 +212,7 @@
         vm.getThisProject = function(project){
             vm.get = true;
             vm.create = false;
+            vm.chart = false;
             vm.thisProject = project;
             vm.tes = vm.thisProject._id;
             console.log("vm.tes: " + vm.tes);
@@ -247,7 +253,10 @@
         }
 
         vm.graphicThisProject = function(project){
-            //var thisProjectToChart = project;  
+            //var thisProjectToChart = project;
+            vm.edit = false;
+            vm.create = false;
+            vm.get = false;  
             if(project.actividades.length < 1){
                 vm.thisProject =  project;
                 console.log("no hay actividades para mostrar");
