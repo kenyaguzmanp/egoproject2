@@ -212,11 +212,17 @@
             console.log("vm.tes: " + vm.tes);
             console.log("proyecto seleccionado: ", vm.thisProject);
             console.log("vm.projects", vm.projects);
-            vm.selectedProjectStyle = {
-                "color" : "white",
-                "background-color" : "coral"
+
+            
+            var actividadesFormat2 = [];
+            for(var f=0; f< vm.thisProject.actividades.length; f++){
+                var fechaFormat = vm.thisProject.actividades[f].fecha;
+                var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
+                actividadesFormat2[f] = dateString;
+                vm.thisProject.actividades[f].fecha = actividadesFormat2[f];
             }
-            //vm.getAllProjects();
+
+
 
         }
 
@@ -249,7 +255,8 @@
                // vm.nochart = true;
             }
             else{
-                var thisProjectToChart = project;           
+                var thisProjectToChart = project;
+                        
                 var actividadesFormat = [];
                 for(var f=0; f< thisProjectToChart.actividades.length; f++){
                     var fechaFormat = thisProjectToChart.actividades[f].fecha;
@@ -258,7 +265,7 @@
                     thisProjectToChart.actividades[f].fecha = actividadesFormat[f];
                 }
                 vm.thisProject =  thisProjectToChart;
-    
+                
                 vm.chart = true;
                 vm.create = false;
                 vm.get = false;
@@ -266,6 +273,7 @@
             }
             
         }
+
 
         vm.showTheChart = function(){
             google.charts.load('current', {'packages':['corechart']});

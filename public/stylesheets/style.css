@@ -1,4 +1,19 @@
-
+body ul{
+    list-style-type: none;
+}
+body a{
+    cursor: pointer;
+}
+body a:hover{
+    text-decoration: none;
+    color: #e4ac43;
+}
 .selected{
-   border-color: blue;
+   color: #db9a21;
+}
+#createProject{
+    float: right;
+}
+#projectOptionsIcons{
+    float: right;
 }

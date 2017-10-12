@@ -41,23 +41,23 @@
             
         </div>
         
-        <!-- ng-class="{'selected': vm.enabled}"  ng-class="{true: 'icon-pfeil_unten', false: 'icon-pfeil-oben'}[category == 16]-->
-        <h3 ng-style="vm.selectedProjectStyle">All your Projects:</h3>
+        <h3>All your Projects:</h3>
         <ul>
-            <li ng-repeat="project in vm.projects | filter : searchAll | filter : searchEstado | filter : searchRfi | filter : searchDescripcion | filter : searchEstado | filter : searchNotas"> 
-                <span><button ng-click="vm.goToThisProject(project)" ng-class="{true:'selected'}[project._id === vm.tes]" class="btn btn-primary">{{project.nombre}}</button>  </span>
-                <span><button ng-click="vm.getThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span></button></span>
-                <span><button ng-click="vm.graphicThisProject(project)" class="btn btn-primary"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></button></span>
-                <!--<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>-->
-                <span><button ng-click="vm.editThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></span>
-                <span><button ng-click="vm.deleteThisProject(project)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></span>
-                    
+            <li ng-repeat="project in vm.projects | filter : searchAll | filter : searchEstado | filter : searchRfi | filter : searchDescripcion | filter : searchEstado | filter : searchNotas">
+                <div>
+                    <a ng-click="vm.getThisProject(project)" ng-class="{true:'selected'}[project._id === vm.tes]">{{project.nombre}}</a>
+                    <span id="projectOptionsIcons"> 
+                        <span><a ng-click="vm.graphicThisProject(project)"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></a></span>
+                        <span><a ng-click="vm.editThisProject(project)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></span>
+                        <span><a ng-click="vm.deleteThisProject(project)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></span>
+                    </span> 
+                </div>                                   
             </li>
             
         </ul>
 
 
-        <button ng-click="vm.createProject()" class="btn btn-danger"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        <button id="createProject" ng-click="vm.createProject()" class="btn btn-danger"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
     </div>
 
   <div class="col-md-8">
@@ -155,9 +155,10 @@
         <p>{{vm.thisProject.descripcion}}</p>
         <p>{{vm.thisProject.notas}}</p>
         <div>
+            <h4>Actividades a relizar: </h4>
             <ul>
                 <li ng-repeat="actividad in vm.thisProject.actividades"> 
-                     <span>{{actividad.fecha}}</span> -- <span>{{actividad.estimadas}}</span> -- <span>{{actividad.finalizadas}}</span>     
+                     <span>Para {{actividad.fecha}}, un total de {{actividad.estimadas + actividades.finalizadas }}  </span>  
                 </li>
             </ul>
         </div>
