@@ -243,7 +243,9 @@
             var data =[['Fecha', 'Estimadas', 'Finalizadas']];
             function drawChart() {
                 for(var k=0; k<vm.thisProject.actividades.length; k++){
-                    data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
+                    var fechaFormat = vm.thisProject.actividades[k].fecha.slice(0, 9);
+                    data[k+1] = [fechaFormat, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];                    
+                    //data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
                 }
                 console.log("data: "+ data);
             data = google.visualization.arrayToDataTable(data);        
