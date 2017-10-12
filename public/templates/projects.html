@@ -15,26 +15,29 @@
 
 <div class="row">
     <div class="col-md-4">
-        <span><button class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button><input type="text" ng-model="searchAll" placeholder="Nombre"></span>
-        <span><button ng-click="vm.fineSearch=true" class="btn btn-danger"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span></button></span>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" class="form-control" ng-model="searchAll" placeholder="Nombre">
+            <span ng-click="vm.fineSearch = !vm.fineSearch" class="input-group-addon"><i class="glyphicon glyphicon-option-vertical"></i></span>
+        </div>
 
-        <div ng-show="vm.fineSearch">  
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            <label>RFI</label>
-            <input type="text" ng-model="searchRfi">
-            <br>
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            <label>Descripcion</label>
-            <input type="text" ng-model="searchDescripcion">
-            <br>
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            <label>Estado del Proyecto</label>
-            <input type="text" ng-model="searchEstado" placeholder="Estado"  class="form-control">
-            <br>
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            <label>Notas</label>
-            <input type="text" ng-model="searchNotas" placeholder="Notas"  class="form-control">
-            <br>
+        <div ng-show="vm.fineSearch">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" ng-model="searchRfi" placeholder="RFI">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" ng-model="searchDescripcion" placeholder="Descripcion">
+            </div>    
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" ng-model="searchEstado" placeholder="Estado">
+            </div>  
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" ng-model="searchNotas" placeholder="Notas">
+            </div>
             
         </div>
         
