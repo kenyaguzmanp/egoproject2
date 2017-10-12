@@ -62,7 +62,6 @@
             $http.get('/api/projects/' + vm.thisProjectId)
                 .then(function(response){
                     console.log("response del project en general ", response.data);
-                   // console.log("data del poll: ", response.data[0]);
                    vm.thisProject = response.data[0];
                 }, function(err){
                     console.log(err);
@@ -84,7 +83,6 @@
                     title: "Grafico"
                 };
                     
-                //var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                var chart = new google.visualization.BarChart(document.getElementById('piechart'));    
                     chart.draw(data, options);
                 }
@@ -121,7 +119,6 @@
                  .then(function(response){
                      var dat = response.data;
                      console.log("data del get all projects " , dat);
-                     //vm.polls = response.data;
                      vm.projects = dat;
                  }, function(err){
                      console.log(err);
@@ -158,7 +155,7 @@
             vm.getThisProject(vm.project);       
         }
 
-            
+        //agregar actividad            
         vm.addActivity = function(){
             vm.activitiesButton = false;
             console.log("la actividad a subir ", vm.actividad);
@@ -171,6 +168,7 @@
             };
         }
 
+        //editar proyecto
         vm.editThisProject = function(project){
             vm.edit = true;
             vm.create = false;
@@ -182,43 +180,34 @@
             
         }
 
+        //guardar cambios de proyecto
         vm.saveChanges = function (){
             console.log("se guardaran lso cambios del proyecto: ", vm.projectToEdit);
             vm.projectToEdit.cambiar = true;
             $http.post('/api/projects', vm.projectToEdit)
                 .then(function(response){
                     console.log("response del post de savechanges", response);
-                    //$window.localStorage.token = response.data;
-                    //vm.thisPollIs = {};
-                    //vm.getAllPolls();
                 }, function(err){
-                    //vm.poll = {};
-                console.log(err);
+                    console.log(err);
                 })
             vm.edit = false;
-            //vm.get = true;
             vm.getThisProject(vm.projectToEdit) 
         }
 
-
+        //ir al proyecto
         vm.goToThisProject = function(thisProject){             
             console.log("the poll you selected: " , thisProject);
             var id = thisProject._id;
-           // console.log("id " + id);
-           // vm.selectedPoll = thisPoll;
             $location.path("/projects/" + id);                      
         }   
 
+        //tomar determinado proyecto
         vm.getThisProject = function(project){
             vm.get = true;
             vm.create = false;
             vm.chart = false;
             vm.thisProject = project;
             vm.tes = vm.thisProject._id;
-            console.log("vm.tes: " + vm.tes);
-            console.log("proyecto seleccionado: ", vm.thisProject);
-            console.log("vm.projects", vm.projects);
-
             
             var actividadesFormat2 = [];
             for(var f=0; f< vm.thisProject.actividades.length; f++){
@@ -232,8 +221,9 @@
 
         }
 
+
+        //borrar royecto
         vm.deleteThisProject = function(thisproject){
-            //console.log("you want to delete this project: ", thisproject);
             if(confirm("Are you sure you want to delete this Project?")){
                 console.log("you want to delete this: " , thisproject);
                 
@@ -241,10 +231,7 @@
                 vm.projectToDelete.borrar = true;          
                 $http.post('/api/projects', vm.projectToDelete)
                     .then(function(response){
-                        //vm.poll = {};
-                        //vm.getAllPolls();
                     }, function(err){
-                        //vm.poll = {};
                     console.log(err);
                 }) 
                 vm.getAllProjects()    
@@ -252,8 +239,8 @@
             }
         }
 
+        //graficar el proyecto
         vm.graphicThisProject = function(project){
-            //var thisProjectToChart = project;
             vm.edit = false;
             vm.create = false;
             vm.get = false;  
@@ -261,7 +248,6 @@
                 vm.thisProject =  project;
                 console.log("no hay actividades para mostrar");
                 vm.chart = false;
-               // vm.nochart = true;
             }
             else{
                 var thisProjectToChart = project;
@@ -294,7 +280,6 @@
                     var dateString = new Date(fechaFormat).toUTCString().split(' ').slice(0, 4).join(' ');
                     console.log("fecha en string " , dateString);
                     data[k+1] = [dateString, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];                    
-                    //data[k+1] = [vm.thisProject.actividades[k].fecha, vm.thisProject.actividades[k].estimadas, vm.thisProject.actividades[k].finalizadas];
                 }
                 console.log("data: "+ data);
             data = google.visualization.arrayToDataTable(data);        
@@ -304,7 +289,6 @@
                 title: "Grafico"
             };
                 
-            //var chart = new google.visualization.PieChart(document.getElementById('piechart'));
            var chart = new google.visualization.BarChart(document.getElementById('chart'));    
                 chart.draw(data, options);
             }
